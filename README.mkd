@@ -1,0 +1,18 @@
+Tiny PHP gallery
+================
+
+Written by Einar Lielmanis, einar@spicausis.lv
+
+
+A very tiny PHP gallery intended to be dropped into a web-facing folder full of images.
+
+See the gallery in action: http://spicausis.lv/gallery-demo/ .
+
+Extensions supported: .jpg, haven't had a need for anything else yet.
+
+The gallery needs to have a writable "thumbs" folder (it will attempt to create one).
+
+It uses imagemagick's convert() for the image conversion. All good hosts have it.
+
+You may add a style.css file to the folder if you suddenly have a wish to customize the looks.
+
