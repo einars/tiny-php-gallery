@@ -20,6 +20,7 @@
 
 function main()
 {
+
     global $images;
     $images = glob('*.jpg') + glob('*.JPG');
 
@@ -46,13 +47,32 @@ function dispatch($action)
 
 }
 
+
+function escapeshellarg_utf8($arg)
+{
+    $current_locale = setlocale(LC_CTYPE, null);
+    $restore = false;
+    if (setlocale(LC_CTYPE, 'en_US.UTF-8')) {
+        $restore = true;
+    }
+
+    $ret = escapeshellarg($arg);
+
+    if ($restore) {
+        setlocale(LC_CTYPE, $current_locale);
+    }
+
+    return $ret;
+}
+
+
 function make_thumb($image)
 {
     assert_good_image($image);
 
     system(sprintf('convert %s -resize 300x170 %s',
-        escapeshellarg($image),
-        escapeshellarg(thumb_of($image))));
+        escapeshellarg_utf8($image),
+        escapeshellarg_utf8(thumb_of($image))));
 
     header('Content-type: image/jpeg');
     readfile(thumb_of($image));
@@ -63,8 +83,8 @@ function make_preview($image)
     assert_good_image($image);
 
     system(sprintf('convert %s -resize 800x600 %s',
-        escapeshellarg($image),
-        escapeshellarg(preview_of($image))));
+        escapeshellarg_utf8($image),
+        escapeshellarg_utf8(preview_of($image))));
 
     header('Content-type: image/jpeg');
     readfile(preview_of($image));
